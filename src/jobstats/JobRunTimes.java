@@ -20,7 +20,7 @@ public class JobRunTimes {
 
 	static LinkedHashMap<String, LinkedHashMap<String, JobExecutionLog>> joblog = new LinkedHashMap<String, LinkedHashMap<String, JobExecutionLog>>();
 	public static void loadJobExecutionLog() {
-		String fileName = "job_execution_log.csv";
+		String fileName = "JobStatistics/src/resources/job_execution_log.csv";
 		JobExecutionLog jobLog ;
 		
 		File file = new File(fileName);

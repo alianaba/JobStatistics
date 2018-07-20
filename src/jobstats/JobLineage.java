@@ -12,7 +12,7 @@ public class JobLineage {
 	 * Print job hierarchy of dependencies
 	 */
 	public static void loadJobMetaData() {
-		String fileName = "job_metadata.csv";
+		String fileName = "JobStatistics/src/resources/job_metadata.csv";
 		JobMetaData jobMd ;
 		
 		File file = new File(fileName);
@@ -85,6 +85,7 @@ public class JobLineage {
 		}
 	}
 	public static void main(String[] args) {
+		System.out.println ("Current directory is " + new File(".").getAbsolutePath());
 		loadJobMetaData();
 		prinJobLineage();
 	}
