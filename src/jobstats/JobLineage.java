@@ -1,12 +1,12 @@
 package jobstats;
 
 import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 import java.io.FileNotFoundException;
 import java.io.File;
 
 public class JobLineage {
-	static TreeMap<String, JobMetaData> jobdata = new TreeMap<String, JobMetaData>();
+	static LinkedHashMap<String, JobMetaData> jobdata = new LinkedHashMap<String, JobMetaData>();
 	
 	/**
 	 * Print job hierarchy of dependencies

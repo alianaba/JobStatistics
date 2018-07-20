@@ -3,13 +3,13 @@ package jobstats;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 public class UpstreamLateStart {
 	public static boolean IsLateStart(String date, String jobName) {
 		JobMetaData jobMd = JobLineage.jobdata.get(jobName);
 		String expectedStart = jobMd.jobStartTime;
-		TreeMap<String, JobExecutionLog> jobLog = JobRunTimes.joblog.get(jobMd.jobName);
+		LinkedHashMap<String, JobExecutionLog> jobLog = JobRunTimes.joblog.get(jobMd.jobName);
 		JobExecutionLog execLog = null;
 		if (jobLog.containsKey(date))
 			execLog = jobLog.get(date);
@@ -58,7 +58,7 @@ public class UpstreamLateStart {
 			System.out.println("This job has no dependencies");
 		else {
 			for (JobMetaData jobMetad: jobMd.depJobs ) {
-				TreeMap<String, JobExecutionLog> jobLog = JobRunTimes.joblog.get(jobMd.jobName);
+				LinkedHashMap<String, JobExecutionLog> jobLog = JobRunTimes.joblog.get(jobMd.jobName);
 				JobExecutionLog execLog = null;
 				if (jobLog.containsKey(date))
 					execLog = jobLog.get(date);

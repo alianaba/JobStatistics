@@ -3,7 +3,7 @@ package jobstats;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 public class JobLateStarts {
 	
@@ -14,7 +14,7 @@ public class JobLateStarts {
 		System.out.println("User provided date - " + date);
 		for (JobMetaData jobMd: JobLineage.jobdata.values()) {
 			String expectedStart = jobMd.jobStartTime;
-			TreeMap<String, JobExecutionLog> jobLog = JobRunTimes.joblog.get(jobMd.jobName);
+			LinkedHashMap<String, JobExecutionLog> jobLog = JobRunTimes.joblog.get(jobMd.jobName);
 			JobExecutionLog execLog = null;
 			if (jobLog.containsKey(date))
 				execLog = jobLog.get(date);

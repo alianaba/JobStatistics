@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.Set;
+import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class JobRunTimes {
 
-	static TreeMap<String, TreeMap<String, JobExecutionLog>> joblog = new TreeMap<String, TreeMap<String, JobExecutionLog>>();
+	static LinkedHashMap<String, LinkedHashMap<String, JobExecutionLog>> joblog = new LinkedHashMap<String, LinkedHashMap<String, JobExecutionLog>>();
 	public static void loadJobExecutionLog() {
 		String fileName = "job_execution_log.csv";
 		JobExecutionLog jobLog ;
@@ -50,10 +51,10 @@ public class JobRunTimes {
 				if (!jobLog.status.equalsIgnoreCase("SUCCESS"))
 					continue;
 				
-				TreeMap<String, JobExecutionLog> execLog = joblog.get(jobName);
+				LinkedHashMap<String, JobExecutionLog> execLog = joblog.get(jobName);
 				
 				if (execLog == null) {	
-					execLog = new TreeMap<String, JobExecutionLog>();
+					execLog = new LinkedHashMap<String, JobExecutionLog>();
 				}
 			
 				DateFormat sdf = new SimpleDateFormat("hh:mm:ss");
@@ -76,7 +77,7 @@ public class JobRunTimes {
 		}
 	}
 	private static long getJobAverageRuntime(String jobName) {
-		TreeMap<String, JobExecutionLog> execLog = joblog.get(jobName);
+		LinkedHashMap<String, JobExecutionLog> execLog = joblog.get(jobName);
 		long totalRunTime = 0;
 		
 		for (String key : execLog.keySet()) {
@@ -98,8 +99,13 @@ public class JobRunTimes {
 			return;
 		System.out.println("job_name" + "\t" + "last_run_date" + "\t" + "last_run_time" +  "\t" + "avg_run_time_7");
 		for (String key: joblog.keySet()) {
-			TreeMap<String, JobExecutionLog> execLog = joblog.get(key);
-			String logKey = execLog.lastKey();
+			LinkedHashMap<String, JobExecutionLog> execLog = joblog.get(key);
+			Set<String> keys = execLog.keySet();
+			String logKey = null;
+			//get last inserted key date
+			for (String keyDate: keys) {
+				logKey = keyDate;
+			}
 			JobExecutionLog log = execLog.get(logKey);
 			
 			System.out.println(key + "\t\t" + log.runDate +  "\t" +  getFormattedTime(log.runTime) + "\t" + getFormattedTime(getJobAverageRuntime(key)));
